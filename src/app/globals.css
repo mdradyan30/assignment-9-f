@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Editorial base ===== */
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-feature-settings: 'ss01', 'ss02', 'cv11';
+}
+
+/* Selection */
+::selection {
+  background: #1a1a1a;
+  color: #fbfaf7;
+}
+[data-theme='ideavaultdark'] ::selection {
+  background: #fbfaf7;
+  color: #1a1a1a;
+}
+
+/* Scrollbar — slim */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+}
+[data-theme='ideavaultdark'] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ===== Editorial typography helpers ===== */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+.display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.body-prose {
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--fallback-bc, oklch(var(--bc) / 0.8));
+}
+
+/* ===== Layout ===== */
+.vault-container {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .vault-container { padding-inline: 2.5rem; }
+}
+
+.rule-top {
+  border-top: 1px solid var(--fallback-b3, oklch(var(--b3)));
+}
+.rule-bottom {
+  border-bottom: 1px solid var(--fallback-b3, oklch(var(--b3)));
+}
+
+/* ===== Cards ===== */
+.editorial-card {
+  background: var(--fallback-b1, oklch(var(--b1)));
+  border-top: 1px solid var(--fallback-b3, oklch(var(--b3)));
+  transition: background 0.3s ease;
+}
+.editorial-card:hover {
+  background: var(--fallback-b2, oklch(var(--b2)));
+}
+
+.idea-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--fallback-b1, oklch(var(--b1)));
+  border: 1px solid var(--fallback-b3, oklch(var(--b3)));
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.idea-card:hover {
+  border-color: var(--fallback-bc, oklch(var(--bc)));
+}
+
+/* ===== Buttons (override DaisyUI to be flatter) ===== */
+.btn-editorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border: 1px solid currentColor;
+  background: transparent;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.btn-editorial:hover {
+  background: var(--fallback-bc, oklch(var(--bc)));
+  color: var(--fallback-b1, oklch(var(--b1)));
+}
+.btn-editorial-solid {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--fallback-bc, oklch(var(--bc)));
+  color: var(--fallback-b1, oklch(var(--b1)));
+  border: 1px solid var(--fallback-bc, oklch(var(--bc)));
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+.btn-editorial-solid:hover {
+  opacity: 0.85;
+}
+
+/* ===== Underline link ===== */
+.link-editorial {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-bottom: 2px;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+  transition: opacity 0.2s;
+}
+.link-editorial:hover {
+  opacity: 0.6;
+}
+
+/* ===== Marquee ===== */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ===== Stagger ===== */
+.stagger > * {
+  opacity: 0;
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.12s; }
+.stagger > *:nth-child(3) { animation-delay: 0.19s; }
+.stagger > *:nth-child(4) { animation-delay: 0.26s; }
+.stagger > *:nth-child(5) { animation-delay: 0.33s; }
+.stagger > *:nth-child(6) { animation-delay: 0.40s; }
+
+/* ===== Drop cap ===== */
+.dropcap::first-letter {
+  font-family: var(--font-display);
+  float: left;
+  font-size: 4.5rem;
+  line-height: 0.85;
+  padding-right: 0.5rem;
+  padding-top: 0.4rem;
+  font-weight: 500;
+}
+
+/* ===== Number badge ===== */
+.num-badge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--fallback-bc, oklch(var(--bc) / 0.6));
+}
