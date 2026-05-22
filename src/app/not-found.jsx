@@ -7,7 +7,7 @@ import { FiArrowLeft, FiHome } from 'react-icons/fi';
 
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
-// Simple inline Lottie animation (paper drift) — kept inline to avoid file deps
+
 const paperAnimation = {
   v: '5.7.4',
   fr: 30,
