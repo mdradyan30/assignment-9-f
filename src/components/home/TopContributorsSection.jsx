@@ -13,14 +13,14 @@ export default function TopContributorsSection() {
     useEffect(() => {
         let active = true;
 
-        // Fetch ideas and aggregate by author to find top contributors
+       
         api
             .getIdeas('?limit=100')
             .then((data) => {
                 if (active) {
                     const ideasList = Array.isArray(data) ? data : data.ideas || [];
 
-                    // Group ideas by author and count
+                    
                     const authorMap = {};
                     ideasList.forEach((idea) => {
                         const authorId = idea.authorId || idea.authorName;
@@ -37,7 +37,7 @@ export default function TopContributorsSection() {
                         }
                     });
 
-                    // Sort by count and take top 6
+                    
                     const topContributors = Object.values(authorMap)
                         .sort((a, b) => b.count - a.count)
                         .slice(0, 6);
