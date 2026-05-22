@@ -15,7 +15,7 @@ export default function CategoryStrip() {
         </h2>
       </div>
 
-      {/* Marquee */}
+
       <div className="relative py-8 border-t border-base-300">
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-base-200 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-base-200 to-transparent z-10 pointer-events-none" />
