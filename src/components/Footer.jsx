@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer className="mt-24 border-t border-base-300 bg-base-100">
       <div className="vault-container py-16">
-        {/* Top masthead row */}
+        
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-12 border-b border-base-300">
           <div>
             <p className="eyebrow text-base-content/50 mb-3">
@@ -29,7 +29,7 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Three columns */}
+       
         <div className="grid gap-10 md:grid-cols-3 py-12">
           <FooterCol num="01" title="Read">
             <FooterLink href="/ideas">Browse all ideas</FooterLink>
