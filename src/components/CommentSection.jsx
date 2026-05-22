@@ -156,7 +156,7 @@ export default function CommentSection({ ideaId, onCountChange }) {
         </div>
       )}
 
-      {/* Comments list */}
+     
       {loading ? (
         <p className="eyebrow text-base-content/50 py-8 text-center">Loading…</p>
       ) : comments.length === 0 ? (
