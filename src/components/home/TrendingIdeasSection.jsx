@@ -15,7 +15,7 @@ export default function TrendingIdeasSection() {
     const fetchTrendingIdeas = async () => {
       try {
         const data = await api.getTrending(6);
-        // Handle both array and object responses
+        
         const ideasArray = Array.isArray(data) ? data : data.ideas || [];
         setIdeas(ideasArray);
       } catch (error) {
