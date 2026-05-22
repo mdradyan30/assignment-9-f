@@ -15,7 +15,7 @@ function LoginInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Extract and validate the redirect URL
+  
   const redirect = getRedirectFromSearchParams(searchParams);
   const error = searchParams?.get?.('error');
 
@@ -27,7 +27,7 @@ function LoginInner() {
     document.title = 'Sign in — IdeaVault';
   }, []);
 
-  // Show error message if provided
+  
   useEffect(() => {
     if (error) {
       if (error === 'session_expired') {
@@ -38,15 +38,15 @@ function LoginInner() {
     }
   }, [error]);
 
-  // Check if we're returning from OAuth callback
+ 
   useEffect(() => {
     if (!user && !loading) {
-      // If not loading and no user, try to refresh session in case we just came back from OAuth
+      
       refreshSession().catch(err => console.error('Session refresh error:', err));
     }
   }, [loading, user, refreshSession]);
 
-  // If user is already logged in, redirect to intended page
+  
   useEffect(() => {
     if (user && !loading) {
       console.log('[Login] User detected, redirecting to:', redirect);
@@ -67,7 +67,7 @@ function LoginInner() {
     try {
       await login(form);
       toast.success('Welcome back.');
-      // স্টেট চেইঞ্জের ঝামেলা এড়াতে সরাসরি পুশ করা হলো
+      
       router.push(redirect);
     } catch (err) {
       toast.error(err.message || 'Login failed');
@@ -185,7 +185,7 @@ function LoginInner() {
                 <span className="h-px flex-1 bg-base-300" />
               </div>
 
-              {/* Better-Auth এর রিডাইরেক্ট গাইডলাইন অনুযায়ী পাস করা হলো */}
+             
               <GoogleAuthButton
                 disabled={submitting}
                 redirectURL={redirect}
@@ -205,7 +205,7 @@ function LoginInner() {
   );
 }
 
-// Field কম্পোনেন্টে name এক্সপ্লিসিটলি রিসিভ করা হলো
+
 function Field({ label, name, ...props }) {
   return (
     <div>
