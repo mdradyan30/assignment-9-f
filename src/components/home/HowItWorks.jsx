@@ -32,7 +32,7 @@ export default function HowItWorks() {
           <div className="lg:col-span-7 lg:col-start-6">
             <p className="body-prose text-lg">
               We don't believe in pitch decks here. Or hype cycles. Or growth
-              hackers. We believe in a clean paragraph, a few honest readers,
+              hackers. We believe in  clean paragraph, a few honest readers,
               and the slow improvement that comes from being seen.
             </p>
           </div>
