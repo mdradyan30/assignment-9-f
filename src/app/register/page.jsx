@@ -71,7 +71,7 @@ function RegisterInner() {
 
   return (
     <div className="min-h-[calc(100vh-72px)] grid lg:grid-cols-2">
-      {/* Left editorial panel */}
+      
       <div className="relative hidden lg:flex flex-col justify-between p-12 bg-base-content text-base-100 border-r border-base-content">
         <p className="eyebrow text-base-100/55">№ 02 · Subscriptions</p>
 
@@ -199,7 +199,7 @@ function RegisterInner() {
 
         <GoogleAuthButton
     disabled={submitting}
-    redirectURL={redirect}   // ✅ এখন consistent
+    redirectURL={redirect}   
 />
 
           <p className="text-center text-sm text-base-content/60 mt-10">
