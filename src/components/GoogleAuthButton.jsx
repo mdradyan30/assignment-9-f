@@ -10,8 +10,8 @@ import { useState } from 'react';
  * GoogleAuthButton Component
  * Handles Google OAuth login with redirect support
  * 
- * @param {boolean} disabled - Whether the button is disabled
- * @param {string} redirectURL - URL to redirect to after successful login (must be relative)
+ * @param {boolean} disabled - 
+ * @param {string} redirectURL - 
  */
 export default function GoogleAuthButton({ disabled = false, redirectURL = "/" }) {
     const [loading, setLoading] = useState(false);
@@ -20,11 +20,10 @@ export default function GoogleAuthButton({ disabled = false, redirectURL = "/" }
         if (disabled || loading) return;
         setLoading(true);
         try {
-            // Validate and get safe redirect URL before passing to OAuth
+            
             const safeRedirectURL = getSafeRedirectURL(redirectURL, '/');
             await signInWithGoogle(safeRedirectURL);
-            // Better Auth will handle redirect automatically to the callbackURL
-            // When page returns from OAuth, AuthContext will fetch session on mount
+            
         } catch (err) {
             toast.error(err.message || "Google sign in failed");
             setLoading(false);
