@@ -62,7 +62,7 @@ function ProfileInner() {
       </header>
 
       <div className="grid lg:grid-cols-12 gap-10">
-        {/* Left: identity card */}
+        
         <aside className="lg:col-span-4">
           <div className="border border-base-300 p-6 sticky top-24">
             <p className="num-badge mb-4">№ Identity</p>
@@ -113,7 +113,7 @@ function ProfileInner() {
           </div>
         </aside>
 
-        {/* Right: form */}
+       
         <form
           onSubmit={handleSubmit}
           className="lg:col-span-8 space-y-8"
@@ -173,7 +173,7 @@ function ProfileInner() {
                 'Saving…'
               ) : (
                 <>
-                  <FiCheck size={14} /> Save changes
+                  <FiCheck size={14} /> 
                 </>
               )}
             </button>
