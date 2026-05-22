@@ -1,73 +1,33 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FiArrowRight } from 'react-icons/fi';
+import { api } from '@/lib/api';
 import IdeaCard from '@/components/IdeaCard';
+import Spinner from '@/components/Spinner';
 
 export default function TrendingIdeasSection() {
-  // Demo trending ideas data
-  const demoTrendingIdeas = [
-    {
-      _id: 'trending-1',
-      title: 'AI-Powered Personal Financial Assistant',
-      shortDescription: 'An intelligent chatbot that analyzes spending patterns and provides personalized financial advice in real-time.',
-      category: 'AI & ML',
-      imageURL: 'https://images.unsplash.com/photo-1639762681033-6461ffad8d80?w=800&q=80',
-      authorName: 'Sarah Chen',
-      likesCount: 245,
-      commentsCount: 18,
-    },
-    {
-      _id: 'trending-2',
-      title: 'Sustainable Urban Farming System',
-      shortDescription: 'A vertical farming solution designed for small urban spaces, reducing water usage by 95% compared to traditional farming.',
-      category: 'Sustainability',
-      imageURL: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad576?w=800&q=80',
-      authorName: 'Marcus Johnson',
-      likesCount: 312,
-      commentsCount: 42,
-    },
-    {
-      _id: 'trending-3',
-      title: 'Mental Health Support Mobile App',
-      shortDescription: 'A peer-to-peer community platform connecting users with trained counselors and support groups for mental wellness.',
-      category: 'Health & Wellness',
-      imageURL: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80',
-      authorName: 'Elena Rodriguez',
-      likesCount: 428,
-      commentsCount: 67,
-    },
-    {
-      _id: 'trending-4',
-      title: 'Decentralized Social Commerce Network',
-      shortDescription: 'A blockchain-based marketplace where creators control their content, data, and earn directly from their community.',
-      category: 'Web3',
-      imageURL: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80',
-      authorName: 'David Liu',
-      likesCount: 567,
-      commentsCount: 89,
-    },
-    {
-      _id: 'trending-5',
-      title: 'Smart Water Management System',
-      shortDescription: 'IoT sensors and AI algorithms to optimize water usage in agricultural and urban settings, saving millions of gallons annually.',
-      category: 'IoT',
-      imageURL: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=80',
-      authorName: 'Priya Sharma',
-      likesCount: 189,
-      commentsCount: 34,
-    },
-    {
-      _id: 'trending-6',
-      title: 'Open-Source Learning Platform',
-      shortDescription: 'A collaborative education platform where educators create free, customizable courses with built-in community feedback loops.',
-      category: 'Education',
-      imageURL: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=80',
-      authorName: 'James Wilson',
-      likesCount: 334,
-      commentsCount: 56,
-    },
-  ];
+  const [ideas, setIdeas] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTrendingIdeas = async () => {
+      try {
+        const data = await api.getTrending(6);
+        // Handle both array and object responses
+        const ideasArray = Array.isArray(data) ? data : data.ideas || [];
+        setIdeas(ideasArray);
+      } catch (error) {
+        console.error('Failed to fetch trending ideas:', error);
+        setIdeas([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrendingIdeas();
+  }, []);
 
   return (
     <section className="border-t border-base-300">
@@ -84,11 +44,21 @@ export default function TrendingIdeasSection() {
           </Link>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 stagger">
-          {demoTrendingIdeas.map((idea, i) => (
-            <IdeaCard key={idea._id} idea={idea} index={i} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="py-12">
+            <Spinner label="Loading trending ideas" />
+          </div>
+        ) : ideas.length > 0 ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 stagger">
+            {ideas.map((idea, i) => (
+              <IdeaCard key={idea._id} idea={idea} index={i} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-base-content/60">No trending ideas at the moment.</p>
+          </div>
+        )}
 
         <div className="mt-12 text-center sm:hidden">
           <Link href="/ideas" className="link-editorial text-sm">

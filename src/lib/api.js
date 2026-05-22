@@ -1,26 +1,25 @@
-// Centralized API helper. Reads token from localStorage and attaches it.
+// Centralized API helper with cookie-based JWT authentication support.
+// All requests include credentials to allow HTTP-Only cookies to be sent/received.
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-function getToken() {
-  if (typeof window === 'undefined') return null;
-  return localStorage.getItem('ideavault_token');
+// Store reference to 401 handler (set by AuthContext)
+let handle401Error = null;
+
+export function set401Handler(callback) {
+  handle401Error = callback;
 }
 
-async function request(path, { method = 'GET', body, auth = false } = {}) {
+async function request(path, { method = 'GET', body } = {}) {
   const headers = { 'Content-Type': 'application/json' };
-
-  if (auth) {
-    const token = getToken();
-    if (token) headers.Authorization = `Bearer ${token}`;
-  }
 
   try {
     const res = await fetch(`${API_URL}${path}`, {
       method,
       headers,
       body: body ? JSON.stringify(body) : undefined,
+      credentials: 'include', // Include HTTP-Only cookies in all requests
     });
 
     let data;
@@ -28,6 +27,15 @@ async function request(path, { method = 'GET', body, auth = false } = {}) {
       data = await res.json();
     } catch {
       data = {};
+    }
+
+    // Handle 401 Unauthorized - user session expired or invalid
+    if (res.status === 401) {
+      console.warn(`[API 401] Unauthorized on ${method} ${path}`);
+      if (handle401Error) {
+        handle401Error();
+      }
+      throw new Error('Unauthorized - Please log in again');
     }
 
     if (!res.ok) {
@@ -55,11 +63,13 @@ export const api = {
     request('/api/auth/login', { method: 'POST', body: payload }),
   googleLogin: (payload) =>
     request('/api/auth/google', { method: 'POST', body: payload }),
+  logout: () =>
+    request('/api/auth/logout', { method: 'POST' }),
 
   // ---- profile ----
-  getProfile: () => request('/api/users/me', { auth: true }),
+  getProfile: () => request('/api/users/me'),
   updateProfile: (payload) =>
-    request('/api/users/me', { method: 'PATCH', body: payload, auth: true }),
+    request('/api/users/me', { method: 'PATCH', body: payload }),
 
   // ---- ideas ----
   getIdeas: (queryString = '') => request(`/api/ideas${queryString}`),
@@ -67,14 +77,14 @@ export const api = {
   getRecent: (limit = 6) => request(`/api/ideas?sort=-createdAt&limit=${limit}`),
   getIdea: (id) => request(`/api/ideas/${id}`),
   createIdea: (payload) =>
-    request('/api/ideas', { method: 'POST', body: payload, auth: true }),
+    request('/api/ideas', { method: 'POST', body: payload }),
   updateIdea: (id, payload) =>
-    request(`/api/ideas/${id}`, { method: 'PUT', body: payload, auth: true }),
+    request(`/api/ideas/${id}`, { method: 'PUT', body: payload }),
   deleteIdea: (id) =>
-    request(`/api/ideas/${id}`, { method: 'DELETE', auth: true }),
-  getMyIdeas: () => request('/api/my-ideas', { auth: true }),
+    request(`/api/ideas/${id}`, { method: 'DELETE' }),
+  getMyIdeas: () => request('/api/my-ideas'),
   toggleLike: (id) =>
-    request(`/api/ideas/${id}/like`, { method: 'PATCH', auth: true }),
+    request(`/api/ideas/${id}/like`, { method: 'PATCH' }),
 
   // ---- comments ----
   getComments: (ideaId) => request(`/api/ideas/${ideaId}/comments`),
@@ -82,27 +92,24 @@ export const api = {
     request(`/api/ideas/${ideaId}/comments`, {
       method: 'POST',
       body: { text },
-      auth: true,
     }),
   editComment: (commentId, text) =>
     request(`/api/comments/${commentId}`, {
       method: 'PUT',
       body: { text },
-      auth: true,
     }),
   deleteComment: (commentId) =>
     request(`/api/comments/${commentId}`, {
       method: 'DELETE',
-      auth: true,
     }),
 
   // ---- interactions ----
-  getMyInteractions: () => request('/api/my-interactions', { auth: true }),
+  getMyInteractions: () => request('/api/my-interactions'),
 
   // ---- bookmarks ----
-  getBookmarks: () => request('/api/bookmarks', { auth: true }),
+  getBookmarks: () => request('/api/bookmarks'),
   toggleBookmark: (id) =>
-    request(`/api/ideas/${id}/bookmark`, { method: 'PATCH', auth: true }),
+    request(`/api/ideas/${id}/bookmark`, { method: 'PATCH' }),
 };
 
 export { API_URL };

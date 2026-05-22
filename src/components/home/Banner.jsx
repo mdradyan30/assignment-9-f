@@ -65,67 +65,66 @@ export default function Banner() {
         </div>
       </div>
 
-      <div className="vault-container py-16 lg:py-24">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-          {/* Text — 7 cols */}
-          <div key={current} className="lg:col-span-7 animate-fade-up">
+      {/* Hero section with full-width image background */}
+      <div className="relative w-full min-h-[600px] lg:min-h-[600px] overflow-hidden bg-base-200 mx-auto">
+        {/* Full-width image */}
+        {SLIDES.map((s, i) => (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={i}
+            src={s.image}
+            alt={s.italic}
+            className={`absolute inset-0 h-full w-full object-cover  grayscale transition-opacity duration-1000 ${i === current ? 'opacity-100' : 'opacity-0'
+              }`}
+          />
+        ))}
+
+        {/* Content overlay */}
+        <div className="relative z-10 vault-container py-16 lg:py-24 flex flex-col justify-between h-full">
+          {/* Text content on the left */}
+          <div key={current} className="lg:col-span-7 animate-fade-up max-w-2xl">
             <p className="eyebrow text-secondary mb-6">{slide.kicker}</p>
-            <h1 className="display text-5xl sm:text-6xl lg:text-7xl mb-6">
+            <h1 className="display text-5xl sm:text-6xl lg:text-7xl mb-6 text-white">
               {slide.title}{' '}
-              <span className="italic font-light text-secondary">
+              <span className="italic font-light text-orange-900">
                 {slide.italic}
               </span>
             </h1>
-            <p className="body-prose text-lg max-w-xl mb-10 dropcap">
+            <p className="body-prose text-lg max-w-xl mb-10 dropcap text-amber-900">
               {slide.lede}
             </p>
             <div className="flex flex-wrap items-center gap-6">
-              <Link href="/ideas" className="btn-editorial-solid">
+              <Link href="/ideas" className="btn-editorial-solid bg-blue-500 hover:bg-blue-800 rounded-full">
                 Begin reading <FiArrowRight size={14} />
               </Link>
-              <Link href="/add-idea" className="link-editorial text-sm">
+              <Link href="/add-idea" className="btn-editorial text-sm text-white bg-orange-500 hover:bg-blue-600 px-4 py-2 rounded-full">
                 Submit an idea
-              </Link>
+              </Link>  
             </div>
           </div>
 
-          {/* Image — 5 cols */}
-          <div className="lg:col-span-5 relative">
-            <figure>
-              <div className="relative aspect-[4/5] overflow-hidden bg-base-200">
-                {SLIDES.map((s, i) => (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    key={i}
-                    src={s.image}
-                    alt={s.italic}
-                    className={`absolute inset-0 h-full w-full object-cover grayscale transition-opacity duration-1000 ${
-                      i === current ? 'opacity-100' : 'opacity-0'
-                    }`}
-                  />
-                ))}
-              </div>
-              <figcaption className="flex items-center justify-between mt-3 text-xs">
-                <span className="eyebrow text-base-content/55">
-                  Fig. {String(current + 1).padStart(2, '0')}
-                </span>
-                <span className="italic text-base-content/65">
-                  — {slide.caption}
-                </span>
-              </figcaption>
-            </figure>
+          {/* Slide controls and caption at the bottom */}
+          <div className="mt-20">
+            {/* Figcaption */}
+            <div className="flex items-center justify-between mb-6 text-xs">
+              <span className="eyebrow text-base-100/55">
+                Fig. {String(current + 1).padStart(2, '0')}
+              </span>
+              <span className="italic text-base-100/65">
+                — {slide.caption}
+              </span>
+            </div>
 
             {/* Slide controls */}
-            <div className="flex items-center justify-between mt-6 pt-4 border-t border-base-300">
+            <div className="flex items-center justify-between pt-4 border-t border-base-100/25">
               <div className="flex gap-2">
                 {SLIDES.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setCurrent(i)}
                     aria-label={`Slide ${i + 1}`}
-                    className={`h-px transition-all ${
-                      i === current ? 'w-10 bg-base-content' : 'w-6 bg-base-content/25 mt-px'
-                    }`}
+                    className={`h-px transition-all ${i === current ? 'w-10 bg-base-100' : 'w-6 bg-base-100/25 mt-px'
+                      }`}
                   />
                 ))}
               </div>
@@ -133,14 +132,14 @@ export default function Banner() {
                 <button
                   onClick={prev}
                   aria-label="Previous"
-                  className="grid place-items-center h-8 w-8 hover:bg-base-200"
+                  className="grid place-items-center h-8 w-8 hover:bg-base-100/10 text-base-100"
                 >
                   <FiChevronLeft size={16} />
                 </button>
                 <button
                   onClick={next}
                   aria-label="Next"
-                  className="grid place-items-center h-8 w-8 hover:bg-base-200"
+                  className="grid place-items-center h-8 w-8 hover:bg-base-100/10 text-base-100"
                 >
                   <FiChevronRight size={16} />
                 </button>
@@ -148,13 +147,13 @@ export default function Banner() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Stat row */}
-        <div className="mt-20 pt-8 border-t border-base-300 grid grid-cols-3 gap-6">
-          <Stat num="12,400+" label="Ideas in the vault" />
-          <Stat num="08" label="Categories of work" />
-          <Stat num="40,000+" label="Discussions running" />
-        </div>
+      {/* Stat row */}
+      <div className="vault-container py-8 border-t border-base-300 grid grid-cols-3 gap-6">
+        <Stat num="12,400+" label="Ideas in the vault" />
+        <Stat num="08" label="Categories of work" />
+        <Stat num="40,000+" label="Discussions running" />
       </div>
     </section>
   );

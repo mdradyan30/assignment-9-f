@@ -3,6 +3,7 @@ import Providers from './providers';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+
 export const metadata = {
   title: 'IdeaVault — A Quiet Place for Loud Ideas',
   description:
@@ -33,7 +34,7 @@ export default function RootLayout({ children }) {
         `}</style>
       </head>
       <body className="min-h-screen bg-base-100 text-base-content flex flex-col font-body antialiased">
-        <Providers>
+       <Providers>
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

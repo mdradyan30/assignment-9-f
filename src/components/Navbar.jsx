@@ -48,10 +48,15 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  const handleLogout = () => {
-    logout();
-    toast.success('Signed out.');
-    router.push('/');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success('Signed out.');
+      router.push('/');
+    } catch (err) {
+      console.error('Logout error:', err);
+      toast.error('Failed to sign out. Please try again.');
+    }
   };
 
   const isActive = (href) =>
@@ -61,11 +66,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
           ? 'bg-base-100/90 backdrop-blur-md border-b border-base-300'
           : 'bg-base-100 border-b border-transparent'
-      }`}
+        }`}
     >
       <nav className="vault-container flex items-center justify-between h-[72px]">
         {/* Wordmark */}
@@ -84,11 +88,10 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className={`relative text-sm transition-colors ${
-                isActive(link.href)
+              className={`relative text-sm transition-colors ${isActive(link.href)
                   ? 'text-base-content'
                   : 'text-base-content/55 hover:text-base-content'
-              }`}
+                }`}
             >
               {link.label}
               {isActive(link.href) && (
@@ -183,11 +186,10 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`py-3 text-base ${
-                  isActive(link.href)
+                className={`py-3 text-base ${isActive(link.href)
                     ? 'text-base-content border-b border-base-content'
                     : 'text-base-content/65 border-b border-base-300'
-                }`}
+                  }`}
               >
                 {link.label}
               </Link>

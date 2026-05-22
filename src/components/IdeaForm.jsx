@@ -276,7 +276,7 @@ function Label({ children, required, hint }) {
         {children}
         {required && <span className="text-error not-italic ml-1">*</span>}
       </span>
-      {hint && <span className="text-base-content/40 normal-case tracking-normal lowercase italic">{hint}</span>}
+      {hint && <span className="text-base-content/40 tracking-normal lowercase italic">{hint}</span>}
     </label>
   );
 }

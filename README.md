@@ -44,7 +44,7 @@
 | Framework   | Next.js 14 (App Router, JSX)                        |
 | Styling     | Tailwind CSS + DaisyUI (custom editorial themes)    |
 | State       | React Context (Auth, Theme)                         |
-| Auth        | Custom JWT + Google OAuth via `@react-oauth/google` |
+| Auth        | Better Auth with Google OAuth and Email/Password   |
 | Animations  | `lottie-react`, custom Tailwind keyframes           |
 | Toasts      | `react-hot-toast`                                   |
 | Icons       | `react-icons`                                       |

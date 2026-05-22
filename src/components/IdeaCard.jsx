@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { FiHeart, FiMessageCircle, FiArrowUpRight } from 'react-icons/fi';
 
-// Editorial idea card — like a newspaper clipping
 export default function IdeaCard({ idea, index = 0 }) {
   const fallbackImg =
     'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&q=80';
@@ -33,7 +32,7 @@ export default function IdeaCard({ idea, index = 0 }) {
 
       {/* Body */}
       <div className="flex flex-col flex-1 p-5">
-        {/* Eyebrow row: issue # + category */}
+        
         <div className="flex items-center justify-between mb-3">
           <span className="num-badge">№ {issueNum}</span>
           <span className="eyebrow text-secondary">{idea.category}</span>
@@ -72,7 +71,7 @@ export default function IdeaCard({ idea, index = 0 }) {
 
         <Link
           href={`/ideas/${idea._id}`}
-          className="mt-4 link-editorial text-sm w-full block text-center py-2 px-3 rounded hover:bg-base-200 transition-colors mx-full"
+          className="mt-4 link-editorial text-sm w-full block text-center py-2 px-3 rounded hover:bg-base-200 transition-colors"
         >
           Read the full idea
           <FiArrowUpRight size={14} className="inline ml-2" />

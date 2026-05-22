@@ -197,10 +197,10 @@ function RegisterInner() {
             <span className="h-px flex-1 bg-base-300" />
           </div>
 
-          <GoogleAuthButton
-            disabled={submitting}
-            onSuccess={() => router.push(redirect)}
-          />
+        <GoogleAuthButton
+    disabled={submitting}
+    redirectURL={redirect}   // ✅ এখন consistent
+/>
 
           <p className="text-center text-sm text-base-content/60 mt-10">
             Already subscribed?{' '}

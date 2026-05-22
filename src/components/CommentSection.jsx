@@ -133,7 +133,7 @@ export default function CommentSection({ ideaId, onCountChange }) {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="btn-editorial-solid disabled:opacity-50"
+                  className="w-full text-center text-2xl rounded-full items-center justify-center btn-editorial-solid disabled:opacity-50"
                 >
                   {submitting ? 'Posting…' : (
                     <>
